@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #afbf51;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            background-color: #eeeeef;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            width: 97%;
+            font-size: 22px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Student Registration</h2>
+
+        <!-- Registration Inputs -->
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="button" id="registerButton">Register</button>
+
+        <div id="registrationMessage"></div>
+    </div>
+
+    <!-- jQuery and Bootstrap JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // jQuery document ready function
+        $(document).ready(function () {
+            $("#registerButton").click(function () {
+                // Get values from input fields
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var password = $("#password").val();
+
+                // Check if any field is empty
+                if (!name || !email || !password) {
+                    $("#registrationMessage").html("Please fill in all fields.");
+                    return;
+                }
+
+                // AJAX request for registration
+                $.ajax({
+                    type: "POST",
+                    url: "register.php",
+                    data: {
+                        name: name,
+                        email: email,
+                        password: password
+                    },
+                    contentType: "application/x-www-form-urlencoded", // Add this line
+                    success: function (response) {
+                        $("#registrationMessage").html(response);
+                    },
+                    error: function () {
+                        $("#registrationMessage").html("Error during registration");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
